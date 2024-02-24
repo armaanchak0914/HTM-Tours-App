@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ScrollView, View, Text, TextInput, StyleSheet, Button, Modal, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-function SettingsPage({ userType }) {
+function SettingsPage({ user }) {
   const [name, setName] = useState('');
   const [age, setAge] = useState('18');
   const [location, setLocation] = useState({ city: '', state: '', country: '' });
@@ -39,7 +39,7 @@ function SettingsPage({ userType }) {
       bio,
       interests,
       phoneNumber,
-      ...(userType === 'local' ? { yearsLived } : { datesInTown }),
+      ...(user.type === 'local' ? { yearsLived } : { datesInTown }),
     };
     console.log(userData);
     // Here you would typically make a POST request to your backend
@@ -158,7 +158,7 @@ function SettingsPage({ userType }) {
       />
 
       {/* Conditional fields */}
-      {userType === 'local' ? (
+      {user.type === 'local' ? (
         <>
           <Text style={styles.label}>Years Lived:</Text>
           <TextInput
