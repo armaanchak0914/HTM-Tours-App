@@ -5,90 +5,122 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 function RequestsPage({ user }) {
   // Initial mock data for demonstration purposes
   const [requests, setRequests] = useState({
-    local: [
-      { id: 1, touristName: 'Alice Johnson', status: 'pending' },
-      { id: 2, touristName: 'Bob Brown', status: 'pending' },
+    incoming: [
+      { id: 1, name: 'Alice Johnson', status: 'pending', phoneNumber: '123-456-7890' },
+      { id: 2, name: 'Bob Brown', status: 'pending', phoneNumber: '098-765-4321' },
     ],
-    tourist: [
-      { id: 1, localName: 'John Doe', status: 'pending' },
-      { id: 2, localName: 'Jane Smith', status: 'accepted' },
+    yourRequests: [
+      { id: 1, name: 'John Doe', status: 'pending', phoneNumber: '555-123-4567' },
+      { id: 2, name: 'Jane Smith', status: 'accepted', phoneNumber: '555-987-6543' },
     ],
   });
 
   const handleAccept = (requestId) => {
-    updateRequestStatus(requestId, 'accepted');
+    updateRequestStatus(requestId, 'accepted', 'incoming');
   };
 
   const handleReject = (requestId) => {
-    updateRequestStatus(requestId, 'rejected');
+    updateRequestStatus(requestId, 'rejected', 'incoming');
   };
 
-  const updateRequestStatus = (requestId, newStatus) => {
-    const updatedRequests = requests.local.map((request) => {
+  const updateRequestStatus = (requestId, newStatus, requestType) => {
+    const updatedRequests = requests[requestType].map((request) => {
       if (request.id === requestId) {
         return { ...request, status: newStatus };
       }
       return request;
     });
-    setRequests({ ...requests, local: updatedRequests });
+    setRequests({ ...requests, [requestType]: updatedRequests });
     // Update request status in the backend
   };
 
   return (
     <View style={styles.container}>
-      <Text>Welcome, {user.name}!</Text>
-      {user.type === 'local' ? (
-        <View>
-          <Text>You are viewing who requested you.</Text>
-          {requests.local.map((request) => (
-            <View key={request.id} style={styles.requestItem}>
-              <Text>{request.touristName}</Text>
-              {request.status === 'pending' ? (
-                <View style={styles.actions}>
-                  <TouchableOpacity onPress={() => handleAccept(request.id)}>
-                    <Ionicons name="checkmark" size={20} color="green" />
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={() => handleReject(request.id)}>
-                    <Ionicons name="close" size={20} color="red" />
-                  </TouchableOpacity>
-                </View>
-              ) : (
-                <Text style={styles.status}>{request.status}</Text>
-              )}
-            </View>
-          ))}
-        </View>
-      ) : (
-        <View>
-          <Text>You are viewing who you requested.</Text>
-          {requests.tourist.map((request) => (
-            <View key={request.id} style={styles.requestItem}>
-              <Text>{request.localName} - {request.status}</Text>
-            </View>
-          ))}
-        </View>
-      )}
+      <Text style={styles.header}>Welcome, {user.name}!</Text>
+      <View>
+        <Text style={styles.sectionTitle}>Incoming Requests:</Text>
+        {requests.incoming.map((request) => (
+          <View key={request.id} style={styles.requestItem}>
+            <Text style={styles.fieldName}>{request.name}</Text>
+            {request.status === 'pending' ? (
+              <View style={styles.actions}>
+                <TouchableOpacity onPress={() => handleAccept(request.id)}>
+                  <Ionicons name="checkmark" size={20} color="green" />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => handleReject(request.id)}>
+                  <Ionicons name="close" size={20} color="red" />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <Text style={styles.status}>{request.status}</Text>
+            )}
+            {request.status === 'accepted' && <Text style={styles.fieldValue}>Phone: {request.phoneNumber}</Text>}
+          </View>
+        ))}
+      </View>
+      <View>
+        <Text style={styles.sectionTitle}>Your Requests:</Text>
+        {requests.yourRequests.map((request) => (
+          <View key={request.id} style={styles.requestItem}>
+            <Text style={styles.fieldName}>{request.name} - {request.status}</Text>
+            {request.status === 'accepted' && <Text style={styles.fieldValue}>Phone: {request.phoneNumber}</Text>}
+          </View>
+        ))}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  requestItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 10,
-  },
-  actions: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  status: {
-    fontWeight: 'bold',
-  },
-});
-
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: '#800020', // Burgundy
+    },
+    header: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: '#DAA520', // Gold
+      marginBottom: 20,
+    },
+    sectionTitle: {
+      fontSize: 18,
+      fontWeight: 'bold',
+      color: '#DAA520', // Gold
+      marginBottom: 10,
+    },
+    requestItem: {
+      marginBottom: 20,
+      borderWidth: 1,
+      borderColor: '#DAA520', // Gold
+      borderRadius: 10,
+      backgroundColor: '#B28645', // Light gold
+      padding: 10,
+    },
+    fieldName: {
+      fontWeight: 'bold',
+      color: '#800020', // Burgundy
+      fontSize: 16,
+      fontFamily: 'Arial', // Change to your preferred font
+      marginBottom: 5,
+    },
+    fieldValue: {
+      color: '#800020', // Burgundy
+      fontSize: 14,
+      fontFamily: 'Arial', // Change to your preferred font
+      marginBottom: 5,
+    },
+    actions: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+    status: {
+      fontWeight: 'bold',
+      color: '#800020', // Burgundy
+      fontSize: 16,
+      fontFamily: 'Arial', // Change to your preferred font
+    },
+  });
+  
+  
 export default RequestsPage;
