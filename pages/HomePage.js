@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, Button } from 'react-native';
 
 function HomePage({ user }) {
   // Mock data for demonstration purposes
@@ -44,6 +44,11 @@ function HomePage({ user }) {
     ],
   };
 
+  const handleRequest = (localName) => {
+    console.log(`Request sent to ${localName}`);
+    // Send request to the local
+  };
+
   return (
     <View style={styles.container}>
       <Text>Welcome, {user.name}!</Text>
@@ -59,6 +64,11 @@ function HomePage({ user }) {
                 <Text>Bio: {local.bio}</Text>
                 <Text>Interests: {local.interests.join(', ')}</Text>
                 <Text>Years Lived: {local.yearsLived}</Text>
+                <Button
+                  title="Request"
+                  onPress={() => handleRequest(local.name)}
+                  color="#007BFF"
+                />
               </View>
             ))}
           </View>
