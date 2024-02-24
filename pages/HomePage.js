@@ -4,8 +4,8 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 function HomePage({ user }) {
-  // Mock data for demonstration purposes
-  const [guides, setGuides] = useState('');
+  const [guides, setGuides] = useState([]);
+  // Implement logic that loads guides if user is tourist or tourists is user is guides.
 
   useEffect(() => {
     axios.get('http://localhost:8000/api/tour_guides/')
@@ -17,7 +17,6 @@ function HomePage({ user }) {
         console.log(error);
       });
   }, []);
-
   const mockData = {
     locals: guides,
     tourists: [
@@ -47,45 +46,45 @@ function HomePage({ user }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Text>Welcome, {user.name}!</Text>
-      <ScrollView>
-        {user.type === 'tourist' ? (
-          <View>
-            <Text>You are viewing the tourist homepage.</Text>
-            {mockData.locals.map((local, index) => (
-              <View key={index} style={styles.item}>
-                <Image source={{ uri: local.picture }} style={styles.image} />
-                <Text>Name: {local.name}</Text>
-                <Text>Age: {local.age}</Text>
-                <Text>Bio: {local.bio}</Text>
-                {/* <Text>Interests: {local.interests.join(', ')}</Text> */}
-                <Text>Years Lived: {local.years_lived}</Text>
-                <Button
-                  title="Request"
-                  onPress={() => handleRequest(local.name)}
-                  color="#007BFF"
-                />
-              </View>
-            ))}
-          </View>
-        ) : (
-          <View>
-            <Text>You are viewing the local homepage.</Text>
-            {mockData.tourists.map((tourist, index) => (
-              <View key={index} style={styles.item}>
-                <Image source={{ uri: tourist.picture }} style={styles.image} />
-                <Text>Name: {tourist.name}</Text>
-                <Text>Age: {tourist.age}</Text>
-                <Text>Bio: {tourist.bio}</Text>
-                <Text>Interests: {tourist.interests.join(', ')}</Text>
-                <Text>Dates in Town: {tourist.datesInTown}</Text>
-              </View>
-            ))}
-          </View>
-        )}
-      </ScrollView>
-    </View>
+    <ScrollView>
+      <View style={styles.container}>
+        <Text>Welcome, {user.name}!</Text>
+          {user.type === 'tourist' ? (
+            <View>
+              <Text>You are viewing the tourist homepage.</Text>
+              {mockData.locals.map((local, index) => (
+                <View key={index} style={styles.item}>
+                  <Image source={{ uri: local.picture }} style={styles.image} />
+                  <Text>Name: {local.name}</Text>
+                  <Text>Age: {local.age}</Text>
+                  <Text>Bio: {local.bio}</Text>
+                  {/* <Text>Interests: {local.interests.join(', ')}</Text> */}
+                  <Text>Years Lived: {local.years_lived}</Text>
+                  <Button
+                    title="Request"
+                    onPress={() => handleRequest(local.name)}
+                    color="#007BFF"
+                  />
+                </View>
+              ))}
+            </View>
+          ) : (
+            <View>
+              <Text>You are viewing the local homepage.</Text>
+              {mockData.tourists.map((tourist, index) => (
+                <View key={index} style={styles.item}>
+                  <Image source={{ uri: tourist.picture }} style={styles.image} />
+                  <Text>Name: {tourist.name}</Text>
+                  <Text>Age: {tourist.age}</Text>
+                  <Text>Bio: {tourist.bio}</Text>
+                  <Text>Interests: {tourist.interests.join(', ')}</Text>
+                  <Text>Dates in Town: {tourist.datesInTown}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+      </View>
+    </ScrollView>
   );
 }
 
