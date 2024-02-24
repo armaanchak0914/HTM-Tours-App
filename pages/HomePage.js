@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, Button } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
 function HomePage({ user }) {
   // Mock data for demonstration purposes
@@ -44,9 +44,9 @@ function HomePage({ user }) {
     ],
   };
 
-  const handleRequest = (localName) => {
-    console.log(`Request sent to ${localName}`);
-    // Send request to the local
+  const handleRequest = (name) => {
+    console.log(`Request sent to ${name}`);
+    // Send request to the person
   };
 
   return (
@@ -58,57 +58,105 @@ function HomePage({ user }) {
             <Text>You are viewing the tourist homepage.</Text>
             {mockData.locals.map((local, index) => (
               <View key={index} style={styles.item}>
-                <Image source={{ uri: local.picture }} style={styles.image} />
-                <Text>Name: {local.name}</Text>
-                <Text>Age: {local.age}</Text>
-                <Text>Bio: {local.bio}</Text>
-                <Text>Interests: {local.interests.join(', ')}</Text>
-                <Text>Years Lived: {local.yearsLived}</Text>
-                <Button
-                  title="Request"
-                  onPress={() => handleRequest(local.name)}
-                  color="#007BFF"
-                />
+              <Image source={{ uri: local.picture }} style={styles.image} />
+              <Text style={styles.fieldName}>Name:</Text>
+              <Text style={styles.fieldValue}>{local.name}</Text>
+              <Text style={styles.fieldName}>Age:</Text>
+              <Text style={styles.fieldValue}>{local.age}</Text>
+              <Text style={styles.fieldName}>Bio:</Text>
+              <Text style={styles.fieldValue}>{local.bio}</Text>
+              <Text style={styles.fieldName}>Interests:</Text>
+              <Text style={styles.fieldValue}>{local.interests.join(', ')}</Text>
+              <Text style={styles.fieldName}>Years Lived:</Text>
+              <Text style={styles.fieldValue}>{local.yearsLived}</Text>
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity style={styles.button} onPress={() => handleRequest(local.name)}>
+                  <Text style={styles.buttonText}>Request</Text>
+                </TouchableOpacity>
               </View>
+            </View>
             ))}
           </View>
         ) : (
           <View>
             <Text>You are viewing the local homepage.</Text>
             {mockData.tourists.map((tourist, index) => (
-              <View key={index} style={styles.item}>
-                <Image source={{ uri: tourist.picture }} style={styles.image} />
-                <Text>Name: {tourist.name}</Text>
-                <Text>Age: {tourist.age}</Text>
-                <Text>Bio: {tourist.bio}</Text>
-                <Text>Interests: {tourist.interests.join(', ')}</Text>
-                <Text>Dates in Town: {tourist.datesInTown}</Text>
-              </View>
-            ))}
+  <View key={index} style={styles.item}>
+    <Image source={{ uri: tourist.picture }} style={styles.image} />
+    <Text style={styles.fieldName}>Name:</Text>
+    <Text style={styles.fieldValue}>{tourist.name}</Text>
+    <Text style={styles.fieldName}>Age:</Text>
+    <Text style={styles.fieldValue}>{tourist.age}</Text>
+    <Text style={styles.fieldName}>Bio:</Text>
+    <Text style={styles.fieldValue}>{tourist.bio}</Text>
+    <Text style={styles.fieldName}>Interests:</Text>
+    <Text style={styles.fieldValue}>{tourist.interests.join(', ')}</Text>
+    <Text style={styles.fieldName}>Dates in Town:</Text>
+    <Text style={styles.fieldValue}>{tourist.datesInTown}</Text>
+    <View style={styles.buttonContainer}>
+      <TouchableOpacity style={styles.button} onPress={() => handleRequest(tourist.name)}>
+        <Text style={styles.buttonText}>Request</Text>
+      </TouchableOpacity>
+    </View>
+  </View>
+))}
           </View>
         )}
-      </ScrollView>
+        </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-  },
-  item: {
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 10,
-    padding: 10,
-  },
-  image: {
-    width: '100%',
-    height: 150,
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-});
-
+    container: {
+      padding: 20,
+      backgroundColor: '#800020', // Burnt Orange
+    },
+    item: {
+      marginBottom: 20,
+      borderWidth: 1,
+      borderColor: '#DAA520', // Gold
+      borderRadius: 10,
+      backgroundColor: '#B28645', // Burgundy
+      padding: 10,
+    },
+    image: {
+      width: '100%',
+      height: 150,
+      borderRadius: 10,
+      marginBottom: 10,
+    },
+    fieldName: {
+      fontWeight: 'bold',
+      color: '#800020', // Gold
+      fontSize: 16,
+      fontFamily: 'Arial', // Change to your preferred font
+      marginBottom: 5,
+    },
+    fieldValue: {
+      color: '#FFFFFF', // White
+      fontSize: 14,
+      fontFamily: 'Arial', // Change to your preferred font
+      marginBottom: 5,
+    },
+    buttonContainer: {
+      marginTop: 10,
+      borderRadius: 20,
+      overflow: 'hidden',
+    },
+    button: {
+      fontWeight: 'bold',
+      backgroundColor: '#DAA520', // Gold
+      paddingVertical: 10,
+      paddingHorizontal: 20,
+      alignItems: 'center',
+    },
+    buttonText: {
+      color: '#800020', // Burgundy
+      fontSize: 16,
+      fontFamily: 'Arial', 
+      fontWeight: 'bold',// Change to your preferred font
+    },
+  });
+  
 export default HomePage;
