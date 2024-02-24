@@ -61,8 +61,8 @@ function HomePage({ user }) {
               <Text style={styles.fieldValue}>{local.age}</Text>
               <Text style={styles.fieldName}>Bio:</Text>
               <Text style={styles.fieldValue}>{local.bio}</Text>
-              <Text style={styles.fieldName}>Interests:</Text>
-              <Text style={styles.fieldValue}>{local.interests.join(', ')}</Text>
+              {/* <Text style={styles.fieldName}>Interests:</Text>
+              <Text style={styles.fieldValue}>{local.interests.join(', ')}</Text> */}
               <Text style={styles.fieldName}>Years Lived:</Text>
               <Text style={styles.fieldValue}>{local.yearsLived}</Text>
               <View style={styles.buttonContainer}>
@@ -86,8 +86,8 @@ function HomePage({ user }) {
     <Text style={styles.fieldName}>Bio:</Text>
     <Text style={styles.fieldValue}>{tourist.bio}</Text>
     <Text style={styles.fieldName}>Interests:</Text>
-    <Text style={styles.fieldValue}>{tourist.interests.join(', ')}</Text>
-    <Text style={styles.fieldName}>Dates in Town:</Text>
+    {/* <Text style={styles.fieldValue}>{tourist.interests.join(', ')}</Text>
+    <Text style={styles.fieldName}>Dates in Town:</Text> */}
     <Text style={styles.fieldValue}>{tourist.datesInTown}</Text>
     <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.button} onPress={() => handleRequest(tourist.name)}>
