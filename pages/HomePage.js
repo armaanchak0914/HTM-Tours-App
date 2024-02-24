@@ -1,28 +1,25 @@
 import React from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, Button } from 'react-native';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
 
 function HomePage({ user }) {
   // Mock data for demonstration purposes
+  const [guides, setGuides] = useState('');
+
+  useEffect(() => {
+    axios.get('http://localhost:8000/api/tour_guides/')
+      .then(response => {
+        setGuides(response.data);
+        console.log(guides)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
   const mockData = {
-    locals: [
-      {
-        name: 'John Doe',
-        age: 30,
-        bio: 'Loves hiking and photography.',
-        interests: ['Hiking', 'Photography'],
-        yearsLived: 5,
-        picture: 'https://via.placeholder.com/150',
-      },
-      {
-        name: 'Jane Smith',
-        age: 25,
-        bio: 'Enjoys exploring new cultures and cuisines.',
-        interests: ['Traveling', 'Cooking'],
-        yearsLived: 3,
-        picture: 'https://via.placeholder.com/150',
-      },
-      // Add more examples here
-    ],
+    locals: guides,
     tourists: [
       {
         name: 'Alice Johnson',
@@ -62,8 +59,8 @@ function HomePage({ user }) {
                 <Text>Name: {local.name}</Text>
                 <Text>Age: {local.age}</Text>
                 <Text>Bio: {local.bio}</Text>
-                <Text>Interests: {local.interests.join(', ')}</Text>
-                <Text>Years Lived: {local.yearsLived}</Text>
+                {/* <Text>Interests: {local.interests.join(', ')}</Text> */}
+                <Text>Years Lived: {local.years_lived}</Text>
                 <Button
                   title="Request"
                   onPress={() => handleRequest(local.name)}
