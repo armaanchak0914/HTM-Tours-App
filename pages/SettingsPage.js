@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, Button, Modal, TouchableOpacity, DatePickerAndroid } from 'react-native';
+import { ScrollView, View, Text, TextInput, StyleSheet, Button, Modal, TouchableOpacity } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 function SettingsPage({ userType }) {
@@ -46,6 +46,7 @@ function SettingsPage({ userType }) {
   };
 
   return (
+    <ScrollView style={styles.container}>
     <View style={styles.container}>
       {/* Name */}
       <Text style={styles.label}>Name:</Text>
@@ -189,6 +190,7 @@ function SettingsPage({ userType }) {
       {/* Submit Button */}
       <Button title="Submit" onPress={handleSubmit} />
     </View>
+    </ScrollView>
   );
 }
 
