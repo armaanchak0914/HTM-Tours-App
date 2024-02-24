@@ -4,7 +4,7 @@ import BottomTabNavigator from './BottomTabNavigator';
 
 const tempUser = {
   name: "Test User",
-  type: "tourist" // Change this to "local" to test as a local
+  type: "local" // Change this to "local" to test as a local
 };
 
 export default function App() {
